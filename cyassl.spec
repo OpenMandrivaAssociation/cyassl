@@ -4,8 +4,8 @@
 
 Summary:	SSL library developed for embedded environments
 Name:		cyassl
-Version:	1.4.0
-Release:	%mkrel 2
+Version:	1.9.0
+Release:	%mkrel 1
 License:	GPL
 Group:		System/Libraries
 URL:		http://www.yassl.com/
@@ -50,7 +50,7 @@ CyaSSL vs. OpenSSL in the vast majority of standard SSL operations.
 %setup -q
 
 find -type f -exec dos2unix -U {} \;
-%patch0 -p0
+%patch0 -p1
 
 %build
 %serverbuild
