@@ -49,7 +49,7 @@ CyaSSL vs. OpenSSL in the vast majority of standard SSL operations.
 
 %setup -q
 
-find -type f -exec dos2unix -U {} \;
+find -type f -exec dos2unix {} \;
 %patch0 -p1
 
 %build
