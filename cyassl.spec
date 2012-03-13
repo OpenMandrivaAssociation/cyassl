@@ -10,6 +10,7 @@ License:	GPL
 Group:		System/Libraries
 URL:		http://www.yassl.com/
 Source0:	http://www.yassl.com/%{name}-%{version}.zip
+BuildRequires:	autoconf automake m4 libtool
 BuildRequires:	dos2unix
 
 %description
@@ -50,6 +51,9 @@ CyaSSL vs. OpenSSL in the vast majority of standard SSL operations.
 find -type f -exec dos2unix {} \;
 
 %build
+rm -f configure
+autoreconf -fi
+
 %serverbuild
 %configure2_5x \
     --enable-shared \
@@ -68,9 +72,7 @@ find -type f -exec dos2unix {} \;
     --enable-keygen \
     --enable-certgen \
     --enable-hc128 \
-    --enable-psk \
-    --enable-gcc-hardening \
-    --enable-linker-hardening
+    --enable-psk
 
 %make
 
