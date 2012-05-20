@@ -4,12 +4,13 @@
 
 Summary:	SSL library developed for embedded environments
 Name:		cyassl
-Version:	2.0.8
-Release:	2
+Version:	2.2.0
+Release:	1
 License:	GPL
 Group:		System/Libraries
 URL:		http://www.yassl.com/
 Source0:	http://www.yassl.com/%{name}-%{version}.zip
+Patch0:		cyassl-2.2.0-build_the_lib_only.diff
 BuildRequires:	autoconf automake m4 libtool
 BuildRequires:	dos2unix
 
@@ -47,6 +48,7 @@ CyaSSL vs. OpenSSL in the vast majority of standard SSL operations.
 %prep
 
 %setup -q
+%patch0 -p0
 
 find -type f -exec dos2unix {} \;
 
@@ -72,7 +74,9 @@ autoreconf -fi
     --enable-keygen \
     --enable-certgen \
     --enable-hc128 \
-    --enable-psk
+    --enable-psk \
+    --enable-ocsp \
+    --enable-crl
 
 %make
 
