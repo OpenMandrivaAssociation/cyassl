@@ -1,0 +1,31 @@
+--- Makefile.am	2012-05-16 21:32:15.000000000 +0200
++++ Makefile.am.oden	2012-05-20 10:21:16.058165890 +0200
+@@ -47,28 +47,11 @@
+ include ctaocrypt/benchmark/include.am
+ include ctaocrypt/src/include.am
+ include ctaocrypt/test/include.am
+-include examples/client/include.am
+-include examples/server/include.am
+-include examples/echoclient/include.am
+-include examples/echoserver/include.am
+-include testsuite/include.am
+-include tests/include.am
+-include sslSniffer/sslSnifferTest/include.am
+ 
+ TESTS += $(check_PROGRAMS)
+ test: check
+ 
+ # !!!! first line of rule has to start with a hard (real) tab, not spaces
+-egs:
+-	$(MAKE) examples/client/client; \
+-	$(MAKE) examples/echoclient/echoclient;\
+-	$(MAKE) examples/server/server; \
+-	$(MAKE) examples/echoserver/echoserver;
+-
+-ctc:
+-	$(MAKE) ctaocrypt/test/testctaocrypt; \
+-	$(MAKE) ctaocrypt/benchmark/benchmark; 
+-
+ merge-clean:
+ 	@find ./ | $(GREP) \.gcda | xargs rm -f
+ 	@find ./ | $(GREP) \.gcno | xargs rm -f
