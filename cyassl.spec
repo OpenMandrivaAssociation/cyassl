@@ -1,18 +1,18 @@
-%define	major 3
+%define	major 0
 %define	libname %mklibname %{name} %{major}
 %define develname %mklibname %{name} -d
 
 Summary:	SSL library developed for embedded environments
 Name:		cyassl
-Version:	2.2.0
-Release:	1
+Version:	1.9.0
+Release:	%mkrel 1
 License:	GPL
 Group:		System/Libraries
 URL:		http://www.yassl.com/
 Source0:	http://www.yassl.com/%{name}-%{version}.zip
-Patch0:		cyassl-2.2.0-build_the_lib_only.diff
-BuildRequires:	autoconf automake m4 libtool
+Patch0:		cyassl-1.4.0-malloc_linkage_fix.diff
 BuildRequires:	dos2unix
+Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 CyaSSL is a C language based SSL library developed for embedded environments
@@ -48,59 +48,65 @@ CyaSSL vs. OpenSSL in the vast majority of standard SSL operations.
 %prep
 
 %setup -q
-%patch0 -p0
 
-find -type f -exec dos2unix {} \;
+find -type f -exec dos2unix -U {} \;
+%patch0 -p1
 
 %build
-rm -f configure
-autoreconf -fi
-
 %serverbuild
-%configure2_5x \
-    --enable-shared \
-    --disable-static \
-    --enable-dtls \
-    --enable-opensslExtra \
-    --enable-ipv6 \
-    --enable-fortress \
-    --enable-bump \
-    --enable-fasthugemath \
-    --enable-hugecache \
-    --enable-aesni \
-    --enable-ripemd \
-    --enable-sha512 \
-    --enable-sessioncerts \
-    --enable-keygen \
-    --enable-certgen \
-    --enable-hc128 \
-    --enable-psk \
-    --enable-ocsp \
-    --enable-crl
-
+%configure2_5x
 %make
 
 %install
+rm -rf %{buildroot}
 
-%makeinstall_std
+# the install is too borked...
 
-# cleanups
-rm -rf %{buildroot}%{_sysconfdir}/ssl
-rm -f %{buildroot}%{_libdir}/lib*.*a
-rm -rf %{buildroot}%{_datadir}/doc
+%makeinstall_std -C src
+
+install -d %{buildroot}%{_includedir}/cyassl/openssl
+install -m0644 include/*.h %{buildroot}%{_includedir}/cyassl/
+install -m0644 include/openssl/*.h %{buildroot}%{_includedir}/cyassl/openssl/
+
+%if %mdkversion < 200900
+%post -n %{libname} -p /sbin/ldconfig
+%endif
+
+%if %mdkversion < 200900
+%postun -n %{libname} -p /sbin/ldconfig
+%endif
+
+%clean
+rm -rf %{buildroot}
 
 %files -n %{libname}
-%doc README
+%defattr(-,root,root)
 %{_libdir}/lib*.so.%{major}*
 
 %files -n %{develname}
-%doc examples/echoclient/echoclient.c
-%doc examples/echoserver/echoserver.c
-%doc examples/server/server.c
+%defattr(-,root,root)
 %dir %{_includedir}/cyassl
-%dir %{_includedir}/cyassl/ctaocrypt
 %dir %{_includedir}/cyassl/openssl
 %{_includedir}/cyassl/*.h
-%{_includedir}/cyassl/ctaocrypt/*.h
 %{_includedir}/cyassl/openssl/*.h
 %{_libdir}/lib*.so
+%{_libdir}/lib*.*a
+
+
+
+%changelog
+* Mon Mar 07 2011 Oden Eriksson <oeriksson@mandriva.com> 1.9.0-1mdv2011.0
++ Revision: 642435
+- 1.9.0
+
+* Sun Dec 05 2010 Oden Eriksson <oeriksson@mandriva.com> 1.4.0-2mdv2011.0
++ Revision: 610187
+- rebuild
+
+* Wed Feb 24 2010 Oden Eriksson <oeriksson@mandriva.com> 1.4.0-1mdv2010.1
++ Revision: 510612
+- import cyassl
+
+
+* Wed Feb 24 2010 Oden Eriksson <oeriksson@mandriva.com> 1.4.0-1mdv2010.0
+- initial Mandriva package

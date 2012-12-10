@@ -1,0 +1,24 @@
+diff -Naur cyassl-1.9.0/src/Makefile.am cyassl-1.9.0.oden/src/Makefile.am
+--- cyassl-1.9.0/src/Makefile.am	2011-02-09 20:30:40.000000000 +0100
++++ cyassl-1.9.0.oden/src/Makefile.am	2011-03-07 12:06:43.706153003 +0100
+@@ -9,7 +9,7 @@
+     ../ctaocrypt/src/aes.c ../ctaocrypt/src/sha256.c ../ctaocrypt/src/dh.c \
+     ../ctaocrypt/src/dsa.c ../ctaocrypt/src/arc4.c ../ctaocrypt/src/rabbit.c \
+     ../ctaocrypt/src/pwdbased.c
+-libcyassl_la_LDFLAGS = -no-undefined -version-info 0:0:0
++libcyassl_la_LDFLAGS = -no-undefined -version-info 0:0:0 -lm
+ EXTRA_DIST = ../include/*.h ../include/openssl/*.h ../include/*.rc
+ 
+ if BUILD_AESNI
+diff -Naur cyassl-1.9.0/src/Makefile.in cyassl-1.9.0.oden/src/Makefile.in
+--- cyassl-1.9.0/src/Makefile.in	2011-03-02 18:29:41.000000000 +0100
++++ cyassl-1.9.0.oden/src/Makefile.in	2011-03-07 12:07:02.451961428 +0100
+@@ -252,7 +252,7 @@
+ 	$(am__append_1) $(am__append_2) $(am__append_3) \
+ 	$(am__append_4) $(am__append_5) $(am__append_6) \
+ 	$(am__append_7) $(am__append_8)
+-libcyassl_la_LDFLAGS = -no-undefined -version-info 0:0:0
++libcyassl_la_LDFLAGS = -no-undefined -version-info 0:0:0 -lm
+ EXTRA_DIST = ../include/*.h ../include/openssl/*.h ../include/*.rc
+ all: all-am
+ 
