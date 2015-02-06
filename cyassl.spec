@@ -5,7 +5,7 @@
 Summary:	SSL library developed for embedded environments
 Name:		cyassl
 Version:	1.9.0
-Release:	%mkrel 1
+Release:	2
 License:	GPL
 Group:		System/Libraries
 URL:		http://www.yassl.com/
