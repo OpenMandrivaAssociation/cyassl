@@ -11,6 +11,11 @@ Group:		System/Libraries
 URL:		https://www.yassl.com/
 Source0:	http://www.yassl.com/%{name}-%{version}.zip
 Patch0:		cyassl-1.4.0-malloc_linkage_fix.diff
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	dos2unix
 Buildroot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
